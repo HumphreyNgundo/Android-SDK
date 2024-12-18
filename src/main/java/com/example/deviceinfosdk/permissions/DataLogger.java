@@ -2,14 +2,20 @@ package com.example.deviceinfosdk.permissions;
 
 import okhttp3.*;
 import java.io.IOException;
-import okhttp3.Call;
-import okhttp3.Response;
 
 public class DataLogger {
-    private static final String SERVER_URL = "https://10.10.0.100:8083/nic_sasa_api/api/log";
+    private static String serverUrl; // Remove final, make it changeable
 
+    // Add a method to set the URL
+    public static void setServerUrl(String url) {
+        serverUrl = url;
+    }
 
     public static void logData(String jsonData) {
+        if (serverUrl == null || serverUrl.isEmpty()) {
+            throw new IllegalStateException("Server URL not set. Call setServerUrl() first");
+        }
+
         OkHttpClient client = new OkHttpClient();
         RequestBody body = RequestBody.create(
                 jsonData,
@@ -17,7 +23,7 @@ public class DataLogger {
         );
 
         Request request = new Request.Builder()
-                .url(SERVER_URL)
+                .url(serverUrl)
                 .post(body)
                 .build();
 
