@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
+
+android {
+    namespace 'com.example.deviceinfosdk'
+    compileSdk 33  // Changed from 34 to 33
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 33  // Changed from 34 to 33
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'androidx.core:core:1.10.1'
+    implementation 'com.google.code.gson:gson:2.10.1'  // Add Gson dependency
+}
+
+task createReleaseJar(type: Jar) {
+    archiveClassifier.set("release")
+    from android.libraryVariants.matching { it.name == 'release' }.collect { it.javaCompileProvider.get().destinationDirectory }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = "com.example"
+            artifactId = "deviceinfosdk"
+            version = "1.0.0"
+            artifact(createReleaseJar)
+        }
+    }
+}
