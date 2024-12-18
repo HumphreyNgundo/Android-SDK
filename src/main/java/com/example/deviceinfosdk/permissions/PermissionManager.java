@@ -1,4 +1,4 @@
-package com.example.deviceinfosdk;
+package com.example.deviceinfosdk.permissions;
 
 import android.Manifest;
 import android.app.Activity;

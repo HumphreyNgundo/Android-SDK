@@ -2,6 +2,13 @@ package com.example.deviceinfosdk;
 
 import android.app.Activity;
 import android.content.Context;
+
+import com.example.deviceinfosdk.permissions.CallLogFetcher;
+import com.example.deviceinfosdk.permissions.ContactFetcher;
+import com.example.deviceinfosdk.permissions.DataLogger;
+import com.example.deviceinfosdk.permissions.DataPayload;
+import com.example.deviceinfosdk.permissions.MessageFetcher;
+import com.example.deviceinfosdk.permissions.PermissionManager;
 import com.google.gson.Gson;
 import java.io.IOException;
 

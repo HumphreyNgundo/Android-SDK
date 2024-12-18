@@ -1,4 +1,4 @@
-package com.example.deviceinfosdk;
+package com.example.deviceinfosdk.permissions;
 
 public class DataPayload {
     private final Object contacts;

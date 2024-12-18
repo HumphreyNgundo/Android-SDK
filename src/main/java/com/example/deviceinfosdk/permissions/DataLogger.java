@@ -1,4 +1,4 @@
-package com.example.deviceinfosdk;
+package com.example.deviceinfosdk.permissions;
 
 import okhttp3.*;
 import java.io.IOException;
