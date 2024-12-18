@@ -1,13 +1,13 @@
 package com.example.deviceinfosdk.permissions;
 
 public class DataPayload {
-    private final Object contacts;
-    private final Object messages;
-    private final Object callLogs;
+    private List<String> contacts;
+    private Map<String, List<String>> messagesBySender; // Changed to Map
+    private List<String> callLogs;
 
-    public DataPayload(Object contacts, Object messages, Object callLogs) {
+    public DataPayload(List<String> contacts, Map<String, List<String>> messagesBySender, List<String> callLogs) {
         this.contacts = contacts;
-        this.messages = messages;
+        this.messagesBySender = messagesBySender;
         this.callLogs = callLogs;
     }
 }
