@@ -11,8 +11,8 @@ import com.example.deviceinfosdk.permissions.PermissionManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
 
 public class DeviceInfoSDK {
 
@@ -26,7 +26,7 @@ public class DeviceInfoSDK {
         return ContactFetcher.fetchContacts(context);
     }
 
-    public static List<String> getMessages(Context context) {
+    public static List<Map<String, String>> getMessages(Context context) {
         return MessageFetcher.fetchMessages(context);
     }
 
@@ -34,13 +34,13 @@ public class DeviceInfoSDK {
         return CallLogFetcher.fetchCallLogs(context);
     }
 
-    public static List<String> getMessagesForSender(Context context, String senderId) {
+    public static List<Map<String, String>> getMessagesForSender(Context context, String senderId) {
         return MessageFetcher.fetchMessagesForSender(context, senderId);
     }
 
     public static void logData(Context context) {
         List<String> contacts = getContacts(context);
-        List<String> messages = getMessages(context);
+        List<Map<String, String>> messages = getMessages(context);
         List<String> callLogs = getCallLogs(context);
 
         // Create a map to hold all the data
@@ -49,6 +49,7 @@ public class DeviceInfoSDK {
         dataMap.put("messages", messages);
         dataMap.put("callLogs", callLogs);
 
+        // Debug logs
         System.out.println("Collected Contacts: " + contacts);
         System.out.println("Collected Messages: " + messages);
         System.out.println("Collected Call Logs: " + callLogs);
